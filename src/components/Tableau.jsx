@@ -28,15 +28,16 @@ const Tableau = ({auth}) => {
     const {mutate} = useMutation((id) => getFicheByDecadaire(id), {
 
         onSuccess: (_) => {
+            console.log(_);
          let  labels = [];
          let datasets = [];
          const grouped = groupBy(_,'date');
          labels = Object.keys(grouped).map(k => format(parseISO(k),'dd/MM/yyyy'));
-         const dt = Object.values(grouped)[0];
+         const dt = Object.values(grouped);
         datasets = dt.map((d,i) => {
-            const somme = d.nombre * d.ticket.valeur;
+            const somme = dt[i][0].nombre * dt[i][0].ticket.valeur;
             return {
-                label: d.ticket.nom,
+                label:dt[i][0].ticket.nom ,
                 backgroundColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
                 data: [somme]
             };
