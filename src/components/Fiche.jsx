@@ -138,10 +138,10 @@ const Fiche = ({auth}) => {
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" rowsPerPageOptions={[10,25,50]}
                     dataKey="_id" rowHover selection={selectedFiches} onSelectionChange={e => setSelectedFiches(e.value)}
                     filters={filters} filterDisplay="menu" loading={isLoading} responsiveLayout="scroll"
-                    globalFilterFields={['nom', 'dedut', 'statut']} emptyMessage="Aucun Fiche trouvé"
+                    globalFilterFields={['date', 'user.email', 'decadaire.nom']} emptyMessage="Aucun Fiche trouvé"
                     currentPageReportTemplate="Voir {first} de {last} à {totalRecords} fiches">
                     <Column selectionMode="multiple" headerStyle={{ width: '3em' }}></Column>
-                    <Column field="date" header="Date" body={dateBodyTemplate} sortable filter filterPlaceholder="Rechercher par nom" style={{ minWidth: '14rem' }} />
+                    <Column field="date" header="Date" body={dateBodyTemplate} sortable style={{ minWidth: '14rem' }} />
                     <Column field="nombre" header="Nombre" sortable  style={{ minWidth: '8rem' }}/>
                     <Column field="decadaire.nom" header="Décadaire" sortable  style={{ minWidth: '8rem' }}/>
                     <Column field="ticket.nom" header="Ticket" sortable  style={{ minWidth: '8rem' }}/>
