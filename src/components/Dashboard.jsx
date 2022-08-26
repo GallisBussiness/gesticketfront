@@ -31,8 +31,8 @@ const Dashboard = () => {
 
   const qk = ['auth',auth?.id]
   const {data} = useQuery(qk, () => getAuth(auth?.id), {
-    staleTime: 100_000,
-    refetchOnWindowFocus: false,
+    stateTime: 100_000,
+    refetchOnWindowFocus:false,
   })
 
   const logout = () => {
@@ -154,15 +154,15 @@ const Dashboard = () => {
       </nav>
 
       {/* content here */}
-
-      <Routes>
+    {data  &&  <Routes>
        <Route path="" element={<Profile auth={data} />} />
        { data?.role === 'admin'&& <Route path="decadaire" element={<Decadaire auth={data}/>} />}
        {data?.role === 'admin'&& <Route path="ticket" element={<Ticket auth={data}/>} />}
        <Route path="fiche" element={<Fiche auth={data}/>} />
        {data?.role === 'admin'&& <Route path="tableau" element={<Tableau auth={data}/>} />}
       {data?.role === 'admin'&& <Route path="users" element={<Users auth={data}/>} />}
-     </Routes>
+     </Routes>}
+     
       </div>
       </div>
       </div>
