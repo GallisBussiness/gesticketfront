@@ -53,12 +53,12 @@ const Dashboard = () => {
       <div className="menu-inner-shadow" />
       <ul className="menu-inner py-1">
         {/* Dashboard */}
-        <li className="menu-item">
-          <Link to="" className="menu-link">
+        {data?.role === 'admin'&& <li className="menu-item">
+          <Link to="profil" className="menu-link">
             <ImProfile className="h-5 w-5 mx-1" />
             <div >Mon Profil</div>
           </Link>
-        </li>
+        </li>}
         {data?.role === 'admin' && <li className="menu-item">
           <Link to="tableau" className="menu-link">
             <AiFillDashboard className="h-5 w-5 mx-1" />
@@ -133,12 +133,12 @@ const Dashboard = () => {
                 <li>
                   <div className="dropdown-divider" />
                 </li>
-                <li>
+                {data?.role === 'admin' && <li>
                   <Link className="dropdown-item" to="">
                     <i className="bx bx-user me-2" />
                     <span className="align-middle">Mon Profil</span>
                   </Link>
-                </li>
+                </li>}
                
                 <li>
                   <div className="dropdown-divider" />
@@ -155,10 +155,11 @@ const Dashboard = () => {
 
       {/* content here */}
     {data  &&  <Routes>
-       <Route path="" element={<Profile auth={data} />} />
+        <Route path="" element={data?.role === 'admin' ? <Profile auth={data} /> : <Fiche auth={data}/>} />
        { data?.role === 'admin'&& <Route path="decadaire" element={<Decadaire auth={data}/>} />}
        {data?.role === 'admin'&& <Route path="ticket" element={<Ticket auth={data}/>} />}
        <Route path="fiche" element={<Fiche auth={data}/>} />
+       {data?.role === 'admin' && <Route path="profil" element={<Profile auth={data} />} />}
        {data?.role === 'admin'&& <Route path="tableau" element={<Tableau auth={data}/>} />}
       {data?.role === 'admin'&& <Route path="users" element={<Users auth={data}/>} />}
      </Routes>}

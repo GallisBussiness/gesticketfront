@@ -3,7 +3,7 @@ import ReactToPrint from 'react-to-print';
 import { Chart } from 'primereact/chart';
 import { useMutation, useQuery } from "react-query";
 import { Dropdown } from "primereact/dropdown";
-import { getDecadaires } from "../services/decadaireservice";
+import { getDecadairesOuvert } from "../services/decadaireservice";
 import { getFicheByDecadaire } from "../services/ticketservice";
 import { format, isBefore, parseISO } from "date-fns";
 import { Button } from 'primereact/button';
@@ -35,13 +35,14 @@ const Tableau = ({auth}) => {
     const quk = ['get_users',auth?._id];
     const qfk = ['get_fiches',auth?._id];
 
-    const {data: decadaires } = useQuery(qkd, () => getDecadaires());
+    const {data: decadaires } = useQuery(qkd, () => getDecadairesOuvert());
     const {data: fiches } = useQuery(qfk, () => getFiches(auth?.role,auth._id));
     const {data: users } = useQuery(quk, () => getUsers());
 
     const {mutate} = useMutation((id) => getFicheByDecadaire(id), {
 
         onSuccess: (_) => {
+           console.log(_);
             const labels = Array.from(new Set(_.map(f => f.date))).sort((a,b) => isBefore(parseISO(a),parseISO(b)) ? -1 : isBefore(parseISO(b),parseISO(a)) ? 1 : 0);
             const labelnames = labels.map(l => format(parseISO(l),'dd/MM/yyyy'));
            
@@ -209,8 +210,9 @@ const Tableau = ({auth}) => {
                        {tds.map((td,i) => (
                         <tr key={i}>
                             <td>{td.date}</td>
-                            <td>{td.repas}</td>
-                            <td>{td.dejeuner}</td>
+                            {ln.map((l,i) => (
+                              <td key={i}>{td[l.toLowerCase()]}</td>
+                            ))}
                         </tr>
                        ))}
                     </tbody>
