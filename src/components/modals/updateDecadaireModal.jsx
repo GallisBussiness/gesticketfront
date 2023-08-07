@@ -10,13 +10,11 @@ import * as yup from 'yup';
 import { create } from 'react-modal-promise'
 
 const schema = yup.object({
-    nom: yup.string()
-    .required(),
    debut: yup.string().required(),
   }).required();
 
 const UpdateDecadaireModal = ({ isOpen, onResolve, onReject,decadaire }) => {
-    const defaultValues = {nom: decadaire?.nom, debut: decadaire?.debut,etat: decadaire.etat};
+    const defaultValues = {debut: decadaire?.debut,etat: decadaire.etat};
   const {control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
     defaultValues
@@ -34,11 +32,7 @@ const onUpdate = data => {
     <Dialog header="Modifier Décadaire" visible={isOpen} onHide={() => onReject(false)}>
     <form id="formAuthentication" className="mb-3" onSubmit={handleSubmit(onUpdate)} method="POST">
             <div className="mb-3">
-            <label htmlFor="nom" className="form-label">Nom</label>
-            <Controller control={control} name="nom" render={({field}) => (
-            <input type="text" {...field} className="form-control focus:border-green-500" id="nom" placeholder="Entrer le nom" autoFocus />
-             )}/>
-              {getFormErrorMessage('nom')} 
+          <h1>NOM : {decadaire?.nom}</h1>
             </div>
             <div className="mb-3">
             <label htmlFor="debut" className="form-label">Debut</label>

@@ -8,15 +8,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { create } from 'react-modal-promise'
 
 const schema = yup.object({
-    nom: yup.string()
-    .required(),
    debut: yup.string().required(),
   }).required();
   
 
 const CreateDecadaireModal = ({ isOpen, onResolve, onReject }) => {
 
-      const defaultValues = {nom: '', debut: ''};
+      const defaultValues = { debut: ''};
       const {control, handleSubmit, formState: { errors } } = useForm({
           resolver: yupResolver(schema),
         defaultValues
@@ -26,7 +24,6 @@ const CreateDecadaireModal = ({ isOpen, onResolve, onReject }) => {
     };
     
     const onCreate = data => {
-        console.log(data);
         onResolve(data);
       };
   
@@ -35,13 +32,6 @@ const CreateDecadaireModal = ({ isOpen, onResolve, onReject }) => {
     <>
     <Dialog header="Creer Décadaire" visible={isOpen} onHide={() => onReject(false)}>
     <form  className="mb-3" onSubmit={handleSubmit(onCreate)} method="POST">
-            <div className="mb-3">
-            <label htmlFor="nom" className="form-label">Nom</label>
-            <Controller control={control} name="nom" render={({field}) => (
-            <input type="text" {...field} className="form-control focus:border-green-500" id="nom" placeholder="Entrer le nom" autoFocus />
-             )}/>
-              {getFormErrorMessage('nom')} 
-            </div>
             <div className="mb-3">
             <label htmlFor="debut" className="form-label">Debut</label>
               <Controller control={control} name="debut" render={({field}) => (

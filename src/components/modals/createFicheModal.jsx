@@ -9,7 +9,7 @@ import { create } from 'react-modal-promise'
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { useQuery } from 'react-query';
-import { getDecadaires } from '../../services/decadaireservice';
+import {  getDecadairesOuvert } from '../../services/decadaireservice';
 import { useState } from 'react';
 import { parseISO } from 'date-fns';
 import { getTickets } from '../../services/ticketservice';
@@ -28,9 +28,9 @@ const CreateFicheModal = ({ isOpen, onResolve, onReject,auth }) => {
  
     const [currentDecadaire, setCurrentDecadaire] = useState(null);
 
-    const qkd = ['get_decadaires',auth?._id]
+    const qkd = ['get_decadairesOver',auth?._id]
 
-    const {data: decadaires } = useQuery(qkd, () => getDecadaires());
+    const {data: decadaires } = useQuery(qkd, () => getDecadairesOuvert());
 
     const qk = ['get_tickets',auth?._id]
 

@@ -10,7 +10,7 @@ import { create } from 'react-modal-promise'
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { useQuery } from 'react-query';
-import { getDecadaires } from '../../services/decadaireservice';
+import { getDecadairesOuvert } from '../../services/decadaireservice';
 import { getTickets } from '../../services/ticketservice';
 import { useState } from 'react';
 
@@ -28,7 +28,7 @@ const UpdateFicheModal = ({ isOpen, onResolve, onReject,fiche }) => {
     const [currentDecadaire, setCurrentDecadaire] = useState(fiche.decadaire);
     const qkd = ['get_decadaires']
 
-    const {data: decadaires } = useQuery(qkd, () => getDecadaires());
+    const {data: decadaires } = useQuery(qkd, () => getDecadairesOuvert());
 
     const qk = ['get_tickets']
 
