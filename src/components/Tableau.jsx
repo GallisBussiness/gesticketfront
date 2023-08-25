@@ -9,26 +9,24 @@ import { getFicheByDecadaire } from "../services/ticketservice";
 // import { Button } from 'primereact/button';
 // import { AiFillPrinter } from 'react-icons/ai';
 import { getUsers } from "../services/userservice";
-import { getFiches } from "../services/ficheservice";
 import { FaUsers } from 'react-icons/fa';
 import { BsBook, BsCalendarRange } from 'react-icons/bs';
 import DecadPrint from "./DecadPrint";
 
 const Tableau = ({auth}) => {
     const [currentDecadaire, setCurrentDecadaire] = useState(null);
+    const [fiches,setFiches] = useState([]);
 
     const qkd = ['get_decadaires',auth?._id];
     const quk = ['get_users',auth?._id];
-    const qfk = ['get_fiches',auth?._id];
 
     const {data: decadaires } = useQuery(qkd, () => getDecadairesOuvert());
-    const {data: fiches } = useQuery(qfk, () => getFiches(auth?.role,auth._id));
     const {data: users } = useQuery(quk, () => getUsers());
 
     const {mutate} = useMutation((id) => getFicheByDecadaire(id), {
-
         onSuccess: (_) => {
-           console.log(_); 
+          console.log(_);
+           setFiches(_); 
       }
   }) 
 
@@ -103,7 +101,7 @@ const Tableau = ({auth}) => {
                 <div className="flex items-center justify-center">
                     <h5 className="text-3xl  font-semibold my-2">{currentDecadaire.nom}</h5>
                 </div>
-                <DecadPrint decad={currentDecadaire} />
+                <DecadPrint decad={currentDecadaire} fiches={fiches} />
             </div>}
        </div>
       
